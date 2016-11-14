@@ -5,14 +5,6 @@ import attrdict
 import svgwrite
 import yaml
 
-# inlays = {
-#     3: 1,
-#     5: 1,
-#     7: 1,
-#     9: 1,
-#     12: 2,
-# }
-
 
 DEFAULT_STYLE = '''
 drawing:
@@ -54,7 +46,14 @@ class ChordChart(object):
     default_style = DEFAULT_STYLE
 
     def __init__(self, positions=None, fingers=None, style=None, strings=6):
-        self.positions = [] if positions is None else positions.split('-') if '-' in positions else list(positions)
+        if positions is None:
+            positions = []
+        elif '-' in positions:
+            positions = positions.split('-')
+        else:
+            positions = list(positions)
+        self.positions = list(map(lambda p: int(p) if p.isdigit() else None, positions))
+
         self.fingers = list(fingers) if fingers else []
         self.strings = strings
 
@@ -92,7 +91,11 @@ class ChordChart(object):
         self.fret_space = (self.chart.attribs['height'] - self.style.nut.size * 2) / 5.
 
         # Calculate which frets are being displayed in the chart
-        first_fret = max(0, min([int(pos) for pos in self.positions if pos.isdigit()]) - 1)
+        fretted_positions = list(filter(lambda pos: isinstance(pos, int), self.positions))
+        if max(fretted_positions) < 5:
+            first_fret = 0
+        else:
+            first_fret = min(filter(lambda pos: pos != 0, fretted_positions)) - 1
         self.frets = list(range(first_fret, first_fret + 5))
 
     def draw_frets(self):
@@ -112,7 +115,7 @@ class ChordChart(object):
     def draw_fret_label(self):
         if self.frets[0] > 0:
             self.drawing.add(
-                self.drawing.text('{0}fr'.format(self.frets[0]),
+                self.drawing.text('{0}'.format(self.frets[0]),
                     insert=(
                         (self.style.drawing.spacing * 1.5) + self.chart.attribs['width'],
                         self.chart.attribs['y'] + self.style.nut.size + (self.style.drawing.font_size * .4)
@@ -206,11 +209,9 @@ class ChordChart(object):
             is_muted = False
             is_open = False
 
-            try:
-                pos = int(pos)
-                is_open = pos == 0
-            except ValueError:
-                pos = None
+            if pos == 0:
+                is_open = True
+            elif pos is None:
                 is_muted = True
 
             if is_muted or is_open:
@@ -236,8 +237,6 @@ class ChordChart(object):
                     self.style.nut.size,
                     (self.fret_space * (pos - self.frets[0])) - (self.fret_space / 2)
                 ))
-
-                print('fret', pos, (x, y))
 
                 self.drawing.add(
                     self.drawing.circle(
@@ -268,7 +267,7 @@ class ChordChart(object):
 
         for index, finger in enumerate(self.fingers):
             if finger.isdigit() and self.fingers.count(finger) > 1:
-                fret = int(self.positions[index])
+                fret = self.positions[index]
                 start_string = index
                 end_string = len(self.fingers) - self.fingers[::-1].index(finger) - 1
                 break
@@ -319,8 +318,6 @@ class ChordChart(object):
                 alignment_baseline='middle'
             )
         )
-
-        print('barre', (start_x, y), (end_x, y))
 
     def get_barre_fret(self):
         for index, finger in enumerate(self.fingers):

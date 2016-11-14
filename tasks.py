@@ -15,7 +15,7 @@ def build(ctx=None):
     chord = fretboard.ChordChart(positions='133211', fingers='134211')
     chord.save('demo/F.svg')
 
-    chord = fretboard.ChordChart(positions='x-15-14-12-0-0', fingers='-321--')
+    chord = fretboard.ChordChart(positions='x-15-14-12-11-11', fingers='-43211')
     chord.save('demo/C-shape.svg')
 
 
