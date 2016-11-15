@@ -1,2 +1,2 @@
-from .chord import ChordChart
+from .chord import Chord, BassChord, UkuleleChord
 from .fretboard import Fretboard

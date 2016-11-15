@@ -1,7 +1,5 @@
 import copy
 
-from collections import OrderedDict
-
 import attrdict
 import svgwrite
 import yaml
