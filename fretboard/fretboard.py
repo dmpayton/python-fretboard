@@ -14,7 +14,7 @@ from .utils import dict_merge
 
 DEFAULT_STYLE = '''
 drawing:
-    background_color: null
+    background_color: white
     font_color: dimgray
     font_family: Lato
     font_size: 15
