@@ -34,7 +34,7 @@ Basic Examples
     chord = fretboard.UkuleleChord(positions='x232', fingers='-132')
     chord.save('svg/ukulele-G.svg')
 
-`Penatonic scale shape <demo/svg/pentatonic-shape.svg>`_::
+`Pentatonic scale shape <demo/svg/pentatonic-shape.svg>`_::
 
     fb = fretboard.Fretboard(frets=(5, 8), style={'marker': {'color': 'dodgerblue'}})
     fb.add_marker(string=0, fret=5, label='A', color='chocolate')
