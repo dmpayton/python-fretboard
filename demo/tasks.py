@@ -61,17 +61,17 @@ def build(ctx):
     fb.save('svg/F-sharp-rocksmith.svg')
 
     # Pentatonic scale shape w/ highlighted root notes
-    fb = fretboard.Fretboard(frets=(5, 8), style={'marker': {'color': 'dodgerblue'}})
-    fb.add_marker(string=0, fret=5, label='A', color='chocolate')
+    fb = fretboard.Fretboard(frets=(5, 8), style={'marker': {'color': 'cornflowerblue'}})
+    fb.add_marker(string=0, fret=5, label='A', color='salmon')
     fb.add_marker(string=1, fret=5, label='D')
     fb.add_marker(string=2, fret=5, label='G')
     fb.add_marker(string=3, fret=5, label='C')
     fb.add_marker(string=4, fret=5, label='E')
-    fb.add_marker(string=5, fret=5, label='A', color='chocolate')
+    fb.add_marker(string=5, fret=5, label='A', color='salmon')
 
     fb.add_marker(string=0, fret=8, label='C')
     fb.add_marker(string=1, fret=7, label='E')
-    fb.add_marker(string=2, fret=7, label='A', color='chocolate')
+    fb.add_marker(string=2, fret=7, label='A', color='salmon')
     fb.add_marker(string=3, fret=7, label='D')
     fb.add_marker(string=4, fret=8, label='G')
     fb.add_marker(string=5, fret=8, label='C')

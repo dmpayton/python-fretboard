@@ -1,2 +1,4 @@
 invoke==0.13.0
 livereload==2.5.0
+
+-r ../requirements.txt
