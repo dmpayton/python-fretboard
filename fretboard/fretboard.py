@@ -14,7 +14,7 @@ from .utils import dict_merge
 
 DEFAULT_STYLE = '''
 drawing:
-    background_color: white
+    background_color: null
     font_color: dimgray
     font_family: Lato
     font_size: 15
@@ -107,14 +107,18 @@ class Fretboard(object):
         top = self.layout.y + self.style.nut.size
 
         for index, fret in enumerate(self.frets):
-            self.drawing.add(
-                self.drawing.line(
-                    start=(self.layout.x, top + (self.layout.fret_space * index)),
-                    end=(self.layout.x + self.layout.width, top + (self.layout.fret_space * index)),
-                    stroke=self.style.fret.color,
-                    stroke_width=self.style.fret.size,
+            if index == 0 and self.frets[0] == 0:
+                # The first fret is the nut, don't draw it.
+                continue
+            else:
+                self.drawing.add(
+                    self.drawing.line(
+                        start=(self.layout.x, top + (self.layout.fret_space * index)),
+                        end=(self.layout.x + self.layout.width, top + (self.layout.fret_space * index)),
+                        stroke=self.style.fret.color,
+                        stroke_width=self.style.fret.size,
+                    )
                 )
-            )
 
     def draw_strings(self):
         top = self.layout.y
@@ -164,7 +168,7 @@ class Fretboard(object):
                 self.drawing.line(
                     start=(self.layout.x, top),
                     end=(self.layout.x + self.layout.width, top),
-                    stroke=self.style.string.color,
+                    stroke=self.style.nut.color,
                     stroke_width=self.style.nut.size,
                 )
             )
@@ -260,7 +264,7 @@ class Fretboard(object):
                     font_weight='bold',
                     fill=self.style.marker.font_color,
                     text_anchor='middle',
-                    alignment_baseline='middle'
+                    alignment_baseline='central'
                 )
             )
 
@@ -280,7 +284,7 @@ class Fretboard(object):
             self.drawing.line(
                 start=(start_x, y),
                 end=(end_x, y),
-                stroke=self.style.string.color,
+                stroke=self.style.marker.border_color,
                 stroke_linecap='round',
                 stroke_width=(self.style.marker.radius * 2) + (self.style.marker.stroke_width * 2)
             )
@@ -305,7 +309,7 @@ class Fretboard(object):
                     font_weight='bold',
                     fill=self.style.marker.font_color,
                     text_anchor='middle',
-                    alignment_baseline='middle'
+                    alignment_baseline='central'
                 )
             )
 
@@ -314,6 +318,18 @@ class Fretboard(object):
             self.style.drawing.width,
             self.style.drawing.height
         ))
+
+        if self.style.drawing.background_color is not None:
+            self.drawing.add(
+                self.drawing.rect(
+                    insert=(0, 0),
+                    size=(
+                        self.style.drawing.width,
+                        self.style.drawing.height
+                    ),
+                    fill=self.style.drawing.background_color
+                )
+            )
 
         self.calculate_layout()
         self.draw_frets()

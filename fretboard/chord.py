@@ -9,44 +9,8 @@ from .fretboard import Fretboard
 from .utils import dict_merge
 
 
-DEFAULT_STYLE = '''
-drawing:
-    background_color: white
-    background_opacity: 1
-    font_color: dimgray
-    font_family: Lato
-    font_size: 15
-    height: 300
-    width: 250
-    spacing: 30
-
-nut:
-    color: dimgray
-    size: 10
-
-fret:
-    color: darkgray
-    size: 2
-
-inlays:
-    color: black
-    radius: 2
-
-string:
-    color: black
-    size: 3
-
-marker:
-    color: chocolate
-    font_color: white
-    radius: 15
-    stroke_width: 2
-
-'''
-
-
 class Chord(object):
-    default_style = yaml.safe_load(DEFAULT_STYLE)
+    default_style = Fretboard.default_style
     inlays = Fretboard.inlays
     strings = 6
 
@@ -84,7 +48,7 @@ class Chord(object):
     def draw(self):
         self.fretboard = Fretboard(
             strings=self.strings,
-            frets = self.get_fret_range(),
+            frets=self.get_fret_range(),
             inlays=self.inlays,
             style=self.style
         )
@@ -122,7 +86,10 @@ class Chord(object):
                 is_muted = True
 
             if is_muted or is_open:
-                self.fretboard.add_string_label(string, 'X' if is_muted else 'O')
+                self.fretboard.add_string_label(
+                    string=string,
+                    label='X' if is_muted else 'O',
+                )
             elif fret is not None and fret != barre_fret:
                 # Add the fret marker
                 try:

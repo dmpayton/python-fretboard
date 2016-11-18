@@ -1,6 +1,3 @@
-attrdict
-svgwrite
-pyyaml
-
-invoke
-livereload
+attrdict==2.0.0
+svgwrite==1.1.9
+PyYAML==3.12
