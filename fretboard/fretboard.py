@@ -23,7 +23,7 @@ drawing:
     spacing: 30
 
 nut:
-    color: dimgray
+    color: darkslategray
     size: 10
 
 fret:
@@ -35,12 +35,12 @@ inlays:
     radius: 2
 
 string:
-    color: black
+    color: darkslategray
     size: 3
 
 marker:
-    border_color: black
-    color: chocolate
+    border_color: darkslategray
+    color: steelblue
     font_color: white
     radius: 12
     stroke_width: 2
