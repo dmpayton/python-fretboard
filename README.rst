@@ -2,7 +2,7 @@
 python-fretboard
 ================
 
-Fretboard is a python library for generating SVG chord charts in Python.
+Fretboard is a python library for generating SVG fretboard images and chord charts in Python.
 
 .. image:: example.png
 
