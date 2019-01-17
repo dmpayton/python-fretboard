@@ -64,7 +64,7 @@ class Fretboard(object):
 
         self.markers = []
 
-        self.inlays = inlays or self.inlays
+        self.inlays = inlays if inlays is not None else self.inlays
 
         self.layout = attrdict.AttrDict()
 
