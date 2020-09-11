@@ -1,24 +1,150 @@
 <!doctype html>
 <html>
-    <head>
-        <title>python-chordchart</title>
-        <style>
-            body { background: #ccc; }
-            img { background: #fff; }
-        </style>
-    </head>
-    <body>
-        <img src="svg/D.svg" alt="D">
-        <img src="svg/F-sharp.svg" alt="F#">
-        <img src="svg/C-shape.svg" alt="C shape">
+<head>
+    <title>python-fretboard</title>
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css" integrity="sha512-ADrqa2PY1TZtb/MoLZIZu/Z/LlPaWQeDMBV73EMwjGam43/JJ5fqW38Rq8LJOVGCDfrJeOMS3Q/wRUVzW5DkjQ==" crossorigin="anonymous" />
+    <style type="text/css">
+        body {
+            background-color: #f6f6f6;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar is-info">
+        <div class="container">
+            <div class="navbar-brand">
+                <span class="navbar-item has-text-weight-bold">python-fretboard</span>
+                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div id="navbar-menu" class="navbar-menu">
+                <div class="navbar-start">
+                    <a href="https://github.com/dmpayton/python-fretboard" class="navbar-item">Github</a>
+                    <a href="https://github.com/dmpayton/python-fretboard/issues" class="navbar-item">Issues</a>
+                    <a href="https://github.com/dmpayton/python-fretboard/blob/master/demo/tasks.py" class="navbar-item">Example Code</a>
+                    <a href="https://github.com/dmpayton/python-fretboard/blob/master/LICENSE" class="navbar-item">MIT License</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="section">
+            <div class="content has-text-centered">
+                <h1>&#x1F3B8; &#x1F3B6; &#x1F40D; &#x1F4A5;</h1>
+            </div>
 
-        <br />
+            <div class="columns is-8 is-variable is-centered is-multiline has-text-centered">
+                <div class="column is-4-tablet is-4-desktop">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="svg/D.svg" alt="Open D">
+                        </div>
+                        <p class="card-content">Open D</p>
+                    </div>
+                </div>
+                <div class="column is-4-tablet is-4-desktop">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="svg/F-barre.svg" alt="F (barre)">
+                        </div>
+                        <p class="card-content">F (Barre)</p>
+                    </div>
+                </div>
+                <div class="column is-4-tablet is-4-desktop">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="svg/C-shape.svg" alt="D">
+                        </div>
+                        <p class="card-content">C shape</p>
+                    </div>
+                </div>
+                <div class="column is-4-tablet is-4-desktop">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="svg/pentatonic-shape.svg" alt="Pentatonic">
+                        </div>
+                        <p class="card-content">Pentatonic scale</p>
+                    </div>
+                </div>
 
-        <img src="svg/F-sharp-rocksmith.svg" alt="F# w/ Rocksmith colors">
-        <img src="svg/pentatonic-shape.svg" alt="pentatonic 1">
+                <div class="column is-4-tablet is-4-desktop">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="svg/bass-E.svg" alt="E (bass)">
+                        </div>
+                        <p class="card-content">E (Bass)</p>
+                    </div>
+                </div>
+                <div class="column is-4-tablet is-4-desktop">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="svg/ukulele-G.svg" alt="G (ukulele)">
+                        </div>
+                        <p class="card-content">G (Ukulele)</p>
+                    </div>
+                </div>
 
-        <img src="svg/ukulele-G.svg" alt="pentatonic 1">
-        <img src="svg/bass-E.svg" alt="pentatonic 1">
+                <div class="column is-4-tablet is-4-desktop">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="svg/F-sharp-rocksmith.svg" alt="E (bass)">
+                        </div>
+                        <p class="card-content">
+                            Styling (<a href="https://rocksmith.ubisoft.com/" target="_blank">Rocksmith</a>)
+                        </p>
+                    </div>
+                </div>
 
-    </body>
+                <div class="column is-12-tablet is-6-desktop">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="svg/G-landscape.svg" alt="E (bass)">
+                        </div>
+                        <p class="card-content">G Major (landscape)</p>
+                    </div>
+                </div>
+                <div class="column is-12-tablet is-8-desktop">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="svg/pentatonic-landscape.svg" alt="Pentatonic (landscape)">
+                        </div>
+                        <p class="card-content">Pentatonic (landscape)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // Get all "navbar-burger" elements
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+      // Check if there are any navbar burgers
+      if ($navbarBurgers.length > 0) {
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach( el => {
+          el.addEventListener('click', () => {
+
+            // Get the target from the "data-target" attribute
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+
+          });
+        });
+      }
+
+    });
+    </script>
+
+</body>
 </html>

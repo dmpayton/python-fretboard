@@ -24,7 +24,7 @@ def build(ctx):
 
     # Barre chord (F#)
     chord = fretboard.Chord(positions='133211', fingers='134211')
-    chord.save('svg/F-sharp.svg')
+    chord.save('svg/F-barre.svg')
 
     # C shape, higher up the neck
     chord = fretboard.Chord(positions='x-15-14-11-12-11', fingers='-43121')
@@ -76,6 +76,38 @@ def build(ctx):
     fb.add_marker(string=4, fret=8, label='G')
     fb.add_marker(string=5, fret=8, label='C')
     fb.save('svg/pentatonic-shape.svg')
+
+    # Landscape G chord
+    chord = fretboard.Chord(positions='320033', fingers='21--34', style={
+        'drawing': {
+            'orientation': 'landscape',
+            'height': 400,
+        }
+    })
+    chord.save('svg/G-landscape.svg')
+
+    # Landscape pentatonic
+    fb = fretboard.Fretboard(frets=(0, 12), style={
+        'drawing': {
+            'orientation': 'landscape',
+            'height': 600
+        },
+        'marker': {'color': 'cornflowerblue'},
+    })
+    fb.add_marker(string=0, fret=5, label='A', color='salmon')
+    fb.add_marker(string=1, fret=5, label='D')
+    fb.add_marker(string=2, fret=5, label='G')
+    fb.add_marker(string=3, fret=5, label='C')
+    fb.add_marker(string=4, fret=5, label='E')
+    fb.add_marker(string=5, fret=5, label='A', color='salmon')
+
+    fb.add_marker(string=0, fret=8, label='C')
+    fb.add_marker(string=1, fret=7, label='E')
+    fb.add_marker(string=2, fret=7, label='A', color='salmon')
+    fb.add_marker(string=3, fret=7, label='D')
+    fb.add_marker(string=4, fret=8, label='G')
+    fb.add_marker(string=5, fret=8, label='C')
+    fb.save('svg/pentatonic-landscape.svg')
 
 
 @invoke.task(pre=[clean, build])
