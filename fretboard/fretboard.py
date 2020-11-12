@@ -294,7 +294,7 @@ class Fretboard(object):
                 )
             )
 
-    def draw_label(self, label, position):
+    def draw_marker_label(self, label, position):
         if label is not None:
             self.drawing.add(
                 self.drawing.text(label,
@@ -347,7 +347,7 @@ class Fretboard(object):
         )
 
         # Draw the label
-        self.draw_label(marker.label, (x+marker.label_adjust[0], y+marker.label_adjust[1]))
+        self.draw_marker_label(marker.label, (x+marker.label_adjust[0], y+marker.label_adjust[1]))
 
     def draw_barre(self, marker):
         marker_string_0 = self.get_layout_string_index(marker.string[0])
@@ -395,7 +395,7 @@ class Fretboard(object):
             )
         )
 
-        self.draw_label(marker.label, (start[0] + marker.label_adjust[0], start[1] + marker.label_adjust[1]))
+        self.draw_marker_label(marker.label, (start[0] + marker.label_adjust[0], start[1] + marker.label_adjust[1]))
 
     def draw(self):
         self.drawing = svgwrite.Drawing(size=(
