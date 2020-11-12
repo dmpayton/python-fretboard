@@ -90,6 +90,9 @@ class Fretboard(object):
             'label_adjust': label_adjust,
         }))
 
+    def wipe(self):
+        self.markers = []
+
     def calculate_layout(self):
         if self.style.drawing.orientation == 'portrait':
             neck_width = self.style.drawing.width - (self.style.drawing.spacing * 2.25)
