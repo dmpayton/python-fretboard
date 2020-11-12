@@ -290,6 +290,20 @@ class Fretboard(object):
                 )
             )
 
+    def draw_label(self, label, position):
+        if label is not None:
+            self.drawing.add(
+                self.drawing.text(label,
+                    insert=position,
+                    font_family=self.style.drawing.font_family,
+                    font_size=self.style.drawing.font_size,
+                    font_weight='bold',
+                    fill=self.style.marker.font_color,
+                    text_anchor='middle',
+                    alignment_baseline='central'
+                )
+            )
+
     def draw_markers(self):
         for marker in self.markers:
             if isinstance(marker.string, (list, tuple)):
@@ -329,18 +343,7 @@ class Fretboard(object):
         )
 
         # Draw the label
-        if marker.label is not None:
-            self.drawing.add(
-                self.drawing.text(marker.label,
-                    insert=(x, y),
-                    font_family=self.style.drawing.font_family,
-                    font_size=self.style.drawing.font_size,
-                    font_weight='bold',
-                    fill=self.style.marker.font_color,
-                    text_anchor='middle',
-                    alignment_baseline='central'
-                )
-            )
+        self.draw_label(marker.label, (x, y))
 
     def draw_barre(self, marker):
         marker_string_0 = self.get_layout_string_index(marker.string[0])
@@ -388,18 +391,7 @@ class Fretboard(object):
             )
         )
 
-        if marker.label is not None:
-            self.drawing.add(
-                self.drawing.text(marker.label,
-                    insert=start,
-                    font_family=self.style.drawing.font_family,
-                    font_size=self.style.drawing.font_size,
-                    font_weight='bold',
-                    fill=self.style.marker.font_color,
-                    text_anchor='middle',
-                    alignment_baseline='central'
-                )
-            )
+        self.draw_label(marker.label, start)
 
     def draw(self):
         self.drawing = svgwrite.Drawing(size=(
