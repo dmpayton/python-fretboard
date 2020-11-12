@@ -80,13 +80,14 @@ class Fretboard(object):
         self.strings[string].label = label
         self.strings[string].font_color = font_color
 
-    def add_marker(self, string, fret, color=None, label=None, font_color=None):
+    def add_marker(self, string, fret, color=None, label=None, font_color=None, label_adjust=(0, 0)):
         self.markers.append(attrdict.AttrDict({
             'fret': fret,
             'string': string,
             'color': color,
             'label': label,
             'font_color': font_color,
+            'label_adjust': label_adjust,
         }))
 
     def calculate_layout(self):
@@ -343,7 +344,7 @@ class Fretboard(object):
         )
 
         # Draw the label
-        self.draw_label(marker.label, (x, y))
+        self.draw_label(marker.label, (x+marker.label_adjust[0], y+marker.label_adjust[1]))
 
     def draw_barre(self, marker):
         marker_string_0 = self.get_layout_string_index(marker.string[0])
@@ -391,7 +392,7 @@ class Fretboard(object):
             )
         )
 
-        self.draw_label(marker.label, start)
+        self.draw_label(marker.label, (start[0] + marker.label_adjust[0], start[1] + marker.label_adjust[1]))
 
     def draw(self):
         self.drawing = svgwrite.Drawing(size=(
