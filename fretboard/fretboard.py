@@ -166,7 +166,6 @@ class Fretboard(object):
                 string_width = self.style.string.size
             else:
                 string_width = self.style.string.size - ((self.style.string.size * 1 / (len(self.strings) * 1.5)) * index)
-            print(f'index: {index}, string_width: {string_width}')
 
             offset = 0
             str_index = self.get_layout_string_index(index)
