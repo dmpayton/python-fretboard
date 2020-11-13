@@ -20,7 +20,8 @@ drawing:
     font_size: 15
     height: 300
     width: 250
-    spacing: 30
+    horizontal_spacing: 30
+    vertical_spacing: 30
     orientation: portrait
 
 nut:
@@ -96,21 +97,21 @@ class Fretboard(object):
 
     def calculate_layout(self):
         if self.style.drawing.orientation == 'portrait':
-            neck_width = self.style.drawing.width - (self.style.drawing.spacing * 2.25)
-            neck_length = self.style.drawing.height - (self.style.drawing.spacing * 2)
+            neck_width = self.style.drawing.width - (self.style.drawing.horizontal_spacing * 2.25)
+            neck_length = self.style.drawing.height - (self.style.drawing.vertical_spacing * 2)
 
             layout_width = neck_width
             layout_height = neck_length
-            layout_x = self.style.drawing.spacing
-            layout_y = self.style.drawing.spacing * 1.5
+            layout_x = self.style.drawing.horizontal_spacing
+            layout_y = self.style.drawing.vertical_spacing * 1.5
         else:
-            neck_width = self.style.drawing.height - (self.style.drawing.spacing * 2.25)
-            neck_length = self.style.drawing.width - (self.style.drawing.spacing * 2)
+            neck_width = self.style.drawing.height - (self.style.drawing.horizontal_spacing * 2.25)
+            neck_length = self.style.drawing.width - (self.style.drawing.vertical_spacing * 2)
 
             layout_width = neck_length
             layout_height = neck_width
-            layout_x = self.style.drawing.spacing * 1.5
-            layout_y = self.style.drawing.spacing
+            layout_x = self.style.drawing.horizontal_spacing * 1.5
+            layout_y = self.style.drawing.vertical_spacing
 
         # Bounding box of our fretboard
         self.layout.update({
@@ -177,12 +178,12 @@ class Fretboard(object):
 
             if self.style.drawing.orientation == 'portrait':
                 label_x = self.layout.x + (self.layout.string_space * str_index) + offset
-                label_y = self.layout.y + self.style.drawing.font_size - self.style.drawing.spacing
+                label_y = self.layout.y + self.style.drawing.font_size - self.style.drawing.vertical_spacing
                 string_start = (label_x, self.layout.y)
                 string_stop = (label_x, self.layout.y + self.layout.height)
 
             elif self.style.drawing.orientation == 'landscape':
-                label_x = self.layout.x + self.style.drawing.font_size - self.style.drawing.spacing
+                label_x = self.layout.x + self.style.drawing.font_size - self.style.drawing.horizontal_spacing
                 label_y = self.layout.y + (self.layout.string_space * str_index) + offset
                 string_start = (self.layout.x, label_y)
                 string_stop = (self.layout.x + self.layout.width, label_y)
@@ -239,7 +240,7 @@ class Fretboard(object):
             inlay_dist = self.style.nut.size + self.layout.fret_space * index - self.layout.fret_space / 2
 
             if self.style.drawing.orientation == 'portrait':
-                x = self.style.drawing.spacing - (self.style.inlays.radius * 4)
+                x = self.style.drawing.horizontal_spacing - (self.style.inlays.radius * 4)
                 y = self.layout.y + inlay_dist
             else:
                 x = self.layout.x + inlay_dist
@@ -281,11 +282,11 @@ class Fretboard(object):
     def draw_fret_label(self):
         if self.frets[0] > 0:
             if self.style.drawing.orientation == 'portrait':
-                x = self.layout.width + self.style.drawing.spacing + self.style.inlays.radius
+                x = self.layout.width + self.style.drawing.horizontal_spacing + self.style.inlays.radius
                 y = self.layout.y + self.style.nut.size + (self.style.drawing.font_size * .2)
             else:
                 x = self.layout.x + self.style.nut.size - (self.style.drawing.font_size * 0.75)
-                y = self.layout.height + self.style.drawing.spacing + self.style.drawing.font_size * 1.0
+                y = self.layout.height + self.style.drawing.vertical_spacing + self.style.drawing.font_size * 1.0
 
             self.drawing.add(
                 self.drawing.text('{0}fr'.format(self.frets[0]),
@@ -325,7 +326,7 @@ class Fretboard(object):
         marker_string = self.get_layout_string_index(marker.string)
 
         if self.style.drawing.orientation == 'portrait':
-            x = self.style.drawing.spacing + (self.layout.string_space * marker_string)
+            x = self.style.drawing.horizontal_spacing + (self.layout.string_space * marker_string)
             y = sum((
                 self.layout.y,
                 self.style.nut.size,
@@ -339,7 +340,7 @@ class Fretboard(object):
                 (self.layout.fret_space * (marker.fret - self.frets[0])) - (
                         self.layout.fret_space / 2)
             ))
-            y = self.style.drawing.spacing + (self.layout.string_space * marker_string)
+            y = self.style.drawing.vertical_spacing + (self.layout.string_space * marker_string)
 
         self.drawing.add(
             self.drawing.circle(
@@ -365,8 +366,8 @@ class Fretboard(object):
                 (self.layout.fret_space * (marker.fret - self.frets[0])) - (
                         self.layout.fret_space / 2)
             ))
-            start = (self.style.drawing.spacing + (self.layout.string_space * marker_string_0), y)
-            end = (self.style.drawing.spacing + (self.layout.string_space * marker_string_1), y)
+            start = (self.style.drawing.horizontal_spacing + (self.layout.string_space * marker_string_0), y)
+            end = (self.style.drawing.horizontal_spacing + (self.layout.string_space * marker_string_1), y)
 
         else:
             x = sum((
@@ -375,8 +376,8 @@ class Fretboard(object):
                 (self.layout.fret_space * (marker.fret - self.frets[0])) - (
                         self.layout.fret_space / 2)
             ))
-            start = (x, self.style.drawing.spacing + (self.layout.string_space * marker_string_1))
-            end = (x, self.style.drawing.spacing + (self.layout.string_space * marker_string_0))
+            start = (x, self.style.drawing.horizontal_spacing + (self.layout.string_space * marker_string_1))
+            end = (x, self.style.drawing.horizontal_spacing + (self.layout.string_space * marker_string_0))
 
         # Lines don't support borders, so fake it by drawing
         # a slightly larger line behind it.
