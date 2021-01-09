@@ -46,7 +46,12 @@ marker:
     radius: 12
     stroke_width: 2
 
+heading:
+    height: 30
+    font_color: darkslategray
+    font_family: Lato
 '''
+
 
 class Fretboard(object):
     default_style = yaml.safe_load(DEFAULT_STYLE)
@@ -55,7 +60,7 @@ class Fretboard(object):
     # A double inlay will be added at the octave (12th fret)
     inlays = (3, 5, 7, 9)
 
-    def __init__(self, strings=6, frets=(0, 5), inlays=None, style=None):
+    def __init__(self, strings=6, frets=(0, 5), inlays=None, style=None, heading=None):
         self.frets = list(range(max(frets[0] - 1, 0), frets[1] + 1))
         self.strings = [attrdict.AttrDict({
             'color': None,
@@ -76,9 +81,14 @@ class Fretboard(object):
             )
         )
 
+        self.heading = heading
+
     def add_string_label(self, string, label, font_color=None):
         self.strings[string].label = label
         self.strings[string].font_color = font_color
+
+    def set_heading(self, heading):
+        self.heading = heading
 
     def add_marker(self, string, fret, color=None, label=None, font_color=None):
         self.markers.append(attrdict.AttrDict({
@@ -90,21 +100,22 @@ class Fretboard(object):
         }))
 
     def calculate_layout(self):
+        heading_height = self.style.heading.height if self.heading else 0
         if self.style.drawing.orientation == 'portrait':
             neck_width = self.style.drawing.width - (self.style.drawing.spacing * 2.25)
-            neck_length = self.style.drawing.height - (self.style.drawing.spacing * 2)
+            neck_length = self.style.drawing.height - (self.style.drawing.spacing * 2) - heading_height
 
             layout_width = neck_width
             layout_height = neck_length
             layout_x = self.style.drawing.spacing
-            layout_y = self.style.drawing.spacing * 1.5
+            layout_y = self.style.drawing.spacing * 1.5 + heading_height
         else:
-            neck_width = self.style.drawing.height - (self.style.drawing.spacing * 2.25)
+            neck_width = self.style.drawing.height - (self.style.drawing.spacing * 2.25) - heading_height
             neck_length = self.style.drawing.width - (self.style.drawing.spacing * 2)
 
             layout_width = neck_length
             layout_height = neck_width
-            layout_x = self.style.drawing.spacing * 1.5
+            layout_x = self.style.drawing.spacing * 1.5 + heading_height
             layout_y = self.style.drawing.spacing
 
         # Bounding box of our fretboard
@@ -137,12 +148,12 @@ class Fretboard(object):
                     top = self.layout.y + self.style.nut.size
                     fret_y = top + (self.layout.fret_space * index)
                     start = (self.layout.x, fret_y)
-                    end=(self.layout.x + self.layout.width, fret_y)
+                    end = (self.layout.x + self.layout.width, fret_y)
                 else:
                     left = self.layout.x + self.style.nut.size
                     fret_x = left + (self.layout.fret_space * index)
-                    start=(fret_x, self.layout.y)
-                    end=(fret_x, self.layout.y + self.layout.height)
+                    start = (fret_x, self.layout.y)
+                    end = (fret_x, self.layout.y + self.layout.height)
 
                 self.drawing.add(
                     self.drawing.line(
@@ -307,7 +318,7 @@ class Fretboard(object):
                 self.layout.y,
                 self.style.nut.size,
                 (self.layout.fret_space * (marker.fret - self.frets[0])) - (
-                            self.layout.fret_space / 2)
+                        self.layout.fret_space / 2)
             ))
         else:
             x = sum((
@@ -332,7 +343,7 @@ class Fretboard(object):
         if marker.label is not None:
             self.drawing.add(
                 self.drawing.text(marker.label,
-                    insert=(x, y),
+                    insert=(x, y+(self.style.marker.radius/2)),
                     font_family=self.style.drawing.font_family,
                     font_size=self.style.drawing.font_size,
                     font_weight='bold',
@@ -341,6 +352,21 @@ class Fretboard(object):
                     alignment_baseline='central'
                 )
             )
+
+    def draw_heading(self):
+        if self.heading is None:
+            return
+        self.drawing.add(
+            self.drawing.text(self.heading,
+                              insert=(self.style.drawing.spacing + self.layout.width / 2, self.style.drawing.spacing),
+                              font_family=self.style.heading.font_family,
+                              font_size=self.style.heading.height,
+                              font_weight='bold',
+                              fill=self.style.heading.font_color,
+                              text_anchor='middle',
+                              alignment_baseline='central'
+                              )
+        )
 
     def draw_barre(self, marker):
         marker_string_0 = self.get_layout_string_index(marker.string[0])
@@ -420,6 +446,7 @@ class Fretboard(object):
             )
 
         self.calculate_layout()
+        self.draw_heading()
         self.draw_frets()
         self.draw_inlays()
         self.draw_fret_label()
