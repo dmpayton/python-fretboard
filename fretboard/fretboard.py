@@ -356,7 +356,6 @@ class Fretboard(object):
     def draw_heading(self):
         if self.heading is None:
             return
-        print(self.layout)
         self.drawing.add(
             self.drawing.text(self.heading,
                               insert=(self.style.drawing.spacing + self.layout.width / 2, self.style.drawing.spacing),
