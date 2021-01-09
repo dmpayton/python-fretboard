@@ -24,7 +24,7 @@ class Chord(object):
     inlays = Fretboard.inlays
     strings = 6
 
-    def __init__(self, positions=None, fingers=None, style=None):
+    def __init__(self, positions=None, fingers=None, style=None, name=None):
         if positions is None:
             positions = []
         elif '-' in positions:
@@ -41,6 +41,8 @@ class Chord(object):
                 style or {}
             )
         )
+
+        self.name = name
 
     def get_barre_fret(self):
         for index, finger in enumerate(self.fingers):
@@ -60,7 +62,8 @@ class Chord(object):
             strings=self.strings,
             frets=self.get_fret_range(),
             inlays=self.inlays,
-            style=self.style
+            style=self.style,
+            heading=self.name,
         )
 
         # Check for a barred fret (we'll need to know this later)
