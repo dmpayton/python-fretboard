@@ -343,7 +343,7 @@ class Fretboard(object):
         if marker.label is not None:
             self.drawing.add(
                 self.drawing.text(marker.label,
-                    insert=(x, y),
+                    insert=(x, y+(self.style.marker.radius/2)),
                     font_family=self.style.drawing.font_family,
                     font_size=self.style.drawing.font_size,
                     font_weight='bold',
