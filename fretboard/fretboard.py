@@ -361,7 +361,7 @@ class Fretboard(object):
             self.drawing.text(self.heading,
                               insert=(self.style.drawing.spacing + self.layout.width / 2, self.style.drawing.spacing),
                               font_family=self.style.heading.font_family,
-                              font_size=self.style.heading.font_height,
+                              font_size=self.style.heading.height,
                               font_weight='bold',
                               fill=self.style.heading.font_color,
                               text_anchor='middle',
